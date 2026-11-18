@@ -1,0 +1,37 @@
+# Riskler
+
+> Belge numaraları (00–13), karar numaraları (K-xx, D-xx) ve "pilot keşif" kavramı için: [ARASTIRMA-OZETI.md](ARASTIRMA-OZETI.md#bu-belgeler-nasıl-okunur).
+
+> 18.11.2026 · Olasılık/etki: **Y** yüksek · **O** orta · **D** düşük (değerlendirme, ölçüm değil). Azaltma önerileri **[ÖNERİ]**'dir. Sahip: riski izleyip kararı verecek taraf. Risk numaraları R1–R20'dir; "inceleme R1–R3" ise bağımsız inceleme raporlarıdır.
+
+## Risk tablosu
+
+| # | Risk | Ol. | Etki | Azaltma **[ÖNERİ]** | Sahibi |
+|---|---|---|---|---|---|
+| R1 | **Poz verisi lisansı:** YFK erişim beyanı birim fiyatların yazılım/veri tabanında izinsiz kullanımını yasaklıyor (FSEK); FSEK md. 31 istisnası belirsiz. Pilot keşif resmî poz istiyor **[GEREKSİNİM]** (→ 02 §2) | Y | Y | MVP'de yalnız firmanın sözleşme kalemleri; toplu içe aktarma/kazıma yok; hukuk görüşü; lisanslı sağlayıcı (AMP/Oska) teklifi veya Bakanlık izni (K-07) | Hukuk + müşteri |
+| R2 | **Hakediş/fiyat farkı mevzuat sürümleri:** 01.09.2025 öncesi/sonrası ilanlı ihaleler farklı YİGŞ/YİİUY hükümlerine tabi; TÜFE 2025=100 geçişinde İo yorumu açık; Karar 10132 geçişini 02 §4 ikincil kaynakla destekliyor, R1 teyit edemedi (→ 02 §4–5) | Y | Y | Sözleşmede "ilan tarihi → kural sürümü"; oran/süreler tarih aralıklı parametre; endeks anlık görüntüsü; çıktı "kontrol hesabı" etiketli; mevzuat.gov.tr teyidi | Kullanıcı (+ müşteri, idare/KİK) |
+| R3 | **Muhasebe kapsam belirsizliği:** "resmî muhasebe" yasal defter mi, SMMM'ye veri mi bilinmiyor; Seçenek C yasal sorumluluk ve uyum onayı getirir (→ 03 §7) | Y | Y | K-05'i görüşmede netleştir; SMMM ile görüş; Seçenek B'de kal; C ayrı karar ve aşama | Müşteri |
+| R4 | **e-Belge entegrasyonu:** doğrudan GİB küçük firmaya uygun görünmüyor; GİB formatları sık güncelleniyor (kaynakta 6 ile 15+ arası, tutarsız); entegratör API ve ücretleri doğrulanmadı (→ 03 §2) | O | Y | Lisanslı entegratör API'si; entegratör soyutlama katmanı; test ortamında senaryo testleri; UBL XML kopyası ERP'de | Kullanıcı + müşteri (entegratör sözleşmesi) |
+| R5 | **KVKK / veri konumu:** AB barındırma yurt dışı aktarım; e-belge asıl muhafazası Türkiye'de olmalı; belge okuma servisleri yurt dışında (→ 06 §4, 05 §4) | O | Y | K-06'yı erken karara bağla; standart sözleşme + 5 iş günü bildirim; e-belge asıl arşivi Türkiye'deki entegratörde; gerekirse yerelde OCR; kişisel veri envanteri | Müşteri + hukuk |
+| R6 | **Excel'deki belgelenmemiş iş kuralları:** formülü yalnızca bir kişinin bilmesi olasılığı **[BELİRSİZ, pilot keşifte doğrulanacak]**; makrolar; Excel'in kendisi hatalı olabilir (→ 07 §6) | Y | Y | İş kuralı kartları + müşteri onayı; tutarsız formül tespiti; sahiple ekran başı görüşme; mutabakatta "açıklanamayan fark" sıfırlanmadan cut-over yok | Müşteri (bilgi) + kullanıcı (yöntem) |
+| R7 | **Tek geliştirici bağımlılığı:** bakım, felaket kurtarma ve bilgi tek kişide (varsayım: D-02'den çıkarım, kullanıcıyla teyit) (→ 06 açık noktalar) | Y | Y | Altyapı kod olarak, otomatik testler, runbook, karar kayıtları; yönetilen hizmet tercih; aylık geri yükleme testi; müşteriyle destek/SLA beklentisini yazılı netleştir | Kullanıcı |
+| R8 | **Kapsam kayması:** pilot keşifte açık uçlu muhasebe; araştırma pilot keşif dışı modüller öneriyor (teminat, taşeron, saha) | Y | O | MVP dar (→ 11); her yeni istek K-03/K-11'e karar maddesi olarak; aşama giriş/çıkış kriterleri | Kullanıcı + müşteri |
+| R9 | **Belge okuma doğruluğu:** Türkçe fiş/fatura başarımı için kaynaklı veri yok; LLM rakam uydurabilir; Google/AWS fatura ayrıştırıcıları Türkçe desteklemiyor (→ 05 §2) | Y | O | Önce e-belge XML + karekod; pilot (150–300 belge, altın etiket); kural doğrulaması; insan onayı zorunlu; tam otomatik kabul yalnız pilot verisiyle | Kullanıcı + müşteri (onaylayıcı) |
+| R10 | **Excel araçları güvenliği:** müşteri dosyaları güvenilmez kaynak; pycel'de kod çalıştırma açığı (CVE-2024-53924, CVSS 9.8); bazı araçlar bakımsız (→ 07 §3.1) | O | Y | pycel kullanılmaz; ağ erişimsiz yalıtılmış ortam, Python `-I`, salt-okunur girdi; makro çalıştırılmaz; dosyalar git dışı; dış servise gönderilmez (K-12) | Kullanıcı |
+| R11 | **Dosya/belge örneği gecikmesi:** gerçek Excel ve belge örnekleri gelmeden kapsam ve tahmin yapılamaz | Y | Y | Görüşme öncesi istenecek belgeler listesi hazırlanır (özel); Aşama 0 adımları dosya geldikçe başlar | Müşteri |
+| R12 | **Teknik yaklaşımın ölçümsüz seçimi:** 06'daki puanlar değerlendirme; yaklaşım "kendi yazılımımız" olarak karara bağlandı (D-05); hazır muhasebe gelmediği için muhasebe açığı ve yavaş başlangıç bilinen bedel (inceleme R1) | O | Y | K-05 yanıtıyla muhasebe açığının boyutu netleşir; müşteri yasal defter ve e-Defter'i ERP içinde isterse karar yeniden değerlendirilir; yığın seçimi açık | Kullanıcı |
+| R13 | **Finansal hesap hataları:** kayan nokta, yuvarlama, sessiz eksik alan (→ 06 §2, 04 §5 SAP örneği) | O | Y | `numeric` tipler, markalı Money tipi, lint kuralı; Excel test örnekleri otomatik test; adım göstergesi ve eksik veri uyarısı | Kullanıcı |
+| R14 | **Kullanıcı direnci / Excel'e geri dönüş** ("çok veri girişi" algısı → 01 §5) | O | O | Excel benzeri tablo, içe/dışa aktarma, az zorunlu alan; dosya sahipleri UAT'de; aylık "hâlâ Excel" taraması | Müşteri + kullanıcı |
+| R15 | **Lisans yükümlülükleri** (LGPL/GPL/EUPL bağımlılıklar, Odoo Enterprise) ürünleşmede | D | O | CI'da bağımlılık lisans taraması; ticari satış öncesi hukuk görüşü | Kullanıcı + hukuk |
+| R16 | **Arayüz hedefinin belirsizliği:** pilot firmanın beğendiği ekran ve akışlar bilinmiyor → yanlış UX hedefi (→ 04 §5) | O | O | "En çok kullanılan 5 ekran" sorusu; tıklanabilir prototip ile 5 kullanıcı testi | Müşteri |
+| R17 | **Fiyat oynaklığı ve satıcı değişiklikleri** (Hetzner zamları, DO HA değişikliği, model fiyatları) | O | D | Sağlayıcıdan bağımsız konteyner yapısı; sipariş öncesi fiyat yenileme | Kullanıcı |
+| R18 | **Güvenlik ihlali / yetki hatası:** parola ele geçirme, yetkisiz proje erişimi, kiracılar arası veri sızıntısı; pilot keşif güvenli kimlik doğrulama istiyor **[GEREKSİNİM]** (→ 06 §6) | O | Y | OWASP ASVS 5.0 Seviye 2; Argon2id + sahip/yöneticiye zorunlu 2FA; merkezî yetki katmanı; RLS ve "A kiracısı B'yi göremez" testleri CI'da; yalnız ekleme yapılan denetim kaydı; canlı öncesi bağımsız sızma testi | Kullanıcı |
+| R19 | **Performans/ölçek hedefinin tutmaması:** ay sonu rapor, büyük Excel aktarımı, eşzamanlı hakediş girişi yavaşlığı; pilot keşif ölçülebilir hedef istiyor **[GEREKSİNİM]** (→ 06 §8) | O | O | Hedefler (p95 < 500 ms, 25 eşzamanlı kullanıcı) yazılı; k6 yük testi CI'da ve gerçek Excel hacmiyle sentetik veri; ağır raporlar arka planda; yavaş sorgu izleme | Kullanıcı |
+| R20 | **Şantiye mobil/çevrimdışı ihtiyacının geç ortaya çıkması:** mimaride henüz yok (inceleme R1) | O | O | Görüşmede şantiye internet/cihaz sorusu; gerekirse PWA + çevrimdışı kuyruk Aşama 2 tasarımına erken alınır | Müşteri + kullanıcı |
+
+## İzleme kuralları **[ÖNERİ]**
+
+- Riskler her aşama geçişinde (→ 11 giriş/çıkış kriterleri) gözden geçirilir; Y/Y riskler (R1, R2, R3, R6, R7, R11) karar listesinde izlenir.
+- Yedek ve felaket kurtarma R7 kapsamında: RPO ≤ 15 dk, RTO ≤ 4 saat, aylık geri yükleme testi (→ 12).
+- Mevzuata bağlı riskler (R2, R4, R5) için yılda en az iki kez ve her Resmî Gazete değişikliğinde parametre tablosu kontrol edilir.
+- Hukuki teyit gereken üç konu tek görüşte toplanabilir: poz verisi (R1), KVKK/veri konumu (R5), açık kaynak lisansları (R15).
